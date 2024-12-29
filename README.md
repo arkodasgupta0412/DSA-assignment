@@ -1,2 +1,2 @@
 # DSA-assignment
-DSA stuffs
+This file contains DSA assignments for Abhirup Pal and Arko Dasgupta.
