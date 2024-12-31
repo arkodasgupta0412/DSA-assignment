@@ -1,5 +1,5 @@
-#ifndef P8CSLL_H
-#define P8CSLL_H
+#ifndef CSLL_H
+#define CSLL_H
 
 #include <stdio.h>
 #include <stdlib.h>

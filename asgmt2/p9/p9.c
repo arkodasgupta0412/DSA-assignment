@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "p8sll.c"
+#include "../p8.c"
 
 Node *build_List(FILE *fp)
 {
@@ -48,11 +48,11 @@ int main()
     }
 
     Node *l1 = build_List(fp);
-    printf("Numbers read from file: \n");
+    printf("\nNumbers read from file: \n\n");
     print(l1);
 
     Node *l2 = build_List_Reverse(fp);
-    printf("Numbers read from file in reverse order: \n");
+    printf("\nNumbers read from file in reverse order: \n\n");
     print(l2);
 
     fclose(fp);

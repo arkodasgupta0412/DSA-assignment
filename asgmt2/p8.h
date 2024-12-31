@@ -1,5 +1,5 @@
-#ifndef P8CDLL_H
-#define P8CDLL_H
+#ifndef P8
+#define P8
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,7 +8,6 @@
 typedef struct Node
 {
     int data;
-    struct Node *prev;
     struct Node *next;
 } Node;
 

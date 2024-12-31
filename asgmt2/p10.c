@@ -1,8 +1,8 @@
-#include "p8sll.c"
+#include "../p8.c"
 #include <stdio.h>
 #include <stdbool.h>
-#include "p6.c"
-#include "utils.c"
+#include "../p6.c"
+#include "../utils.c"
 #include <limits.h>
 
 // Function prototypes for additional operations
@@ -26,35 +26,41 @@ void reverse_list(Node **head);
 void sort_list(Node **head, int op);
 Node *build_reverse_list(Node *head);
 
-// Main function
+void menu()
+{
+    printf("\nMenu:\n");
+    printf("1. Create Linked List\n");
+    printf("2. Print List\n");
+    printf("3. Print List in Reverse\n");
+    printf("4. Find Size of List\n");
+    printf("5. Check if Two Lists are Equal\n");
+    printf("6. Search and delete the Key\n");
+    printf("7. Append List\n");
+    printf("8. Delete Nth Node\n");
+    printf("9. Check if List is Ordered\n");
+    printf("10. Merge Two Sorted Lists\n");
+    printf("11. Insert Target Node\n");
+    printf("12. Remove Duplicates\n");
+    printf("13. Swap Elements Pairwise\n");
+    printf("14. Move Last Element to Front\n");
+    printf("15. Delete Alternate Nodes\n");
+    printf("16. Rotate List\n");
+    printf("17. Reverse List\n");
+    printf("18. Sort List\n");
+    printf("19. Build Reverse List\n");
+    printf("20. Exit\n");
+}
+
 int main()
 {
     int choice, data, key, position, size, op;
-    Node *list1, *list2, *appendList, *mergedList;
+    Node *list1, *list2, *appendList, *mergedList, *reversed;
+
+    menu();
 
     while (1)
     {
-        printf("\nMenu:\n");
-        printf("1. Create Linked List\n");
-        printf("2. Print List\n");
-        printf("3. Print List in Reverse\n");
-        printf("4. Find Size of List\n");
-        printf("5. Check if Two Lists are Equal\n");
-        printf("6. Search for a Key\n");
-        printf("7. Append List\n");
-        printf("8. Delete Nth Node\n");
-        printf("9. Check if List is Ordered\n");
-        printf("10. Merge Two Sorted Lists\n");
-        printf("11. Insert Target Node\n");
-        printf("12. Remove Duplicates\n");
-        printf("13. Swap Elements Pairwise\n");
-        printf("14. Move Last Element to Front\n");
-        printf("15. Delete Alternate Nodes\n");
-        printf("16. Rotate List\n");
-        printf("17. Reverse List\n");
-        printf("18. Sort List\n");
-        printf("19. Exit\n");
-        printf("Enter your choice: ");
+        printf("\nEnter your choice: ");
         scanf("%d", &choice);
 
         switch (choice)
@@ -172,12 +178,27 @@ int main()
             break;
 
         case 19:
+            reversed = build_reverse_list(list1);
+            printf("Original List: ");
+            print(list1);
+            printf("Built Reverse List: ");
+            print(reversed);
+            break;
+
+        case 20:
             printf("Exiting...\n");
             exit(0);
             break;
 
         default:
             printf("Invalid choice. Please try again.\n");
+            printf("Enter 'm' to display menu again\n");
+            char showMenu;
+            scanf(" %c", &showMenu);
+            if (showMenu == 'm' || showMenu == 'M')
+            {
+                menu();
+            }
             break;
         }
     }

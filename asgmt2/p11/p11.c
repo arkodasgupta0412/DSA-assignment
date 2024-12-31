@@ -1,10 +1,10 @@
-#include "p11_adt.h"
+#include "p11_adt.c"
 #include <stdio.h>
 
 void print_list(NodePool *list);
 void print_reverse_list(NodePool *list);
 int find_size(NodePool *list);
-int check_equal(NodePool *list1, NodePool *list2);
+int are_equal(NodePool *list1, NodePool *list2);
 int search_and_delete(NodePool *list, int key);
 void append_list(NodePool *list1, NodePool *list2);
 void delete_nth_node(NodePool *list, int n);
@@ -19,6 +19,32 @@ void reverse_list(NodePool *list);
 void sort_list(NodePool *list);
 void build_reverse_list(NodePool *list, int arr[], int size);
 
+void menu()
+{
+    // Menu for the linked list operations
+    printf("\nLinked List Operations Menu:\n");
+    printf("1. Insert at front\n");
+    printf("2. Insert after a node\n");
+    printf("3. Delete at front\n");
+    printf("4. Delete after a node\n");
+    printf("5. Print list\n");
+    printf("6. Print reverse list\n");
+    printf("7. Find size of list\n");
+    printf("8. Check if lists are equal\n");
+    printf("9. Search and delete node\n");
+    printf("10. Merge two sorted lists\n");
+    printf("11. Append list to the end of another list\n");
+    printf("12. Delete nth node\n");
+    printf("13. Delete last node\n");
+    printf("14. Delete first node\n");
+    printf("15. Check if list is ordered\n");
+    printf("16. Sort list\n");
+    printf("17. Reverse list\n");
+    printf("18. Rotate list\n");
+    printf("19. Remove duplicates\n");
+    printf("20. Exit\n");
+}
+
 int main()
 {
     NodePool list1, list2, result;
@@ -28,31 +54,11 @@ int main()
 
     int choice, value, valpos, n, key;
 
+    menu();
+
     while (1)
     {
-        // Menu for the linked list operations
-        printf("\nLinked List Operations Menu:\n");
-        printf("1. Insert at front\n");
-        printf("2. Insert after a node\n");
-        printf("3. Delete at front\n");
-        printf("4. Delete after a node\n");
-        printf("5. Print list\n");
-        printf("6. Print reverse list\n");
-        printf("7. Find size of list\n");
-        printf("8. Check if lists are equal\n");
-        printf("9. Search and delete node\n");
-        printf("10. Merge two sorted lists\n");
-        printf("11. Append list to the end of another list\n");
-        printf("12. Delete nth node\n");
-        printf("13. Delete last node\n");
-        printf("14. Delete first node\n");
-        printf("15. Check if list is ordered\n");
-        printf("16. Sort list\n");
-        printf("17. Reverse list\n");
-        printf("18. Rotate list\n");
-        printf("19. Remove duplicates\n");
-        printf("20. Exit\n");
-        printf("Enter your choice: ");
+        printf("\nEnter your choice: ");
         scanf("%d", &choice);
 
         switch (choice)
@@ -61,6 +67,7 @@ int main()
             printf("Enter value to insert at front: ");
             scanf("%d", &value);
             insert_front(&list1, value);
+            printf("Value inserted\n");
             break;
 
         case 2: // Insert after a node
@@ -69,16 +76,19 @@ int main()
             printf("Enter new value to insert: ");
             scanf("%d", &value);
             insert_after(&list1, valpos, value);
+            printf("Value inserted\n");
             break;
 
         case 3: // Delete at front
             delete_front(&list1);
+            printf("Value deleted\n");
             break;
 
         case 4: // Delete after a node
             printf("Enter value after which to delete: ");
             scanf("%d", &value);
             delete_after(&list1, value);
+            printf("Value deleted\n");
             break;
 
         case 5: // Print list
@@ -92,11 +102,11 @@ int main()
             break;
 
         case 7: // Find size of the list
-            printf("Size of the list: %d\n", list_size(&list1));
+            printf("Size of the list: %d\n", find_size(&list1));
             break;
 
         case 8: // Check if lists are equal
-            if (are_lists_equal(&list1, &list2))
+            if (are_equal(&list1, &list2))
             {
                 printf("Lists are equal.\n");
             }
@@ -129,11 +139,11 @@ int main()
             break;
 
         case 13: // Delete last node
-            delete_last_node(&list1);
+            delete_nth_node(&list1, find_size(&list1));
             break;
 
         case 14: // Delete first node
-            delete_first_node(&list1);
+            delete_nth_node(&list1, 1);
             break;
 
         case 15: // Check if the list is ordered
@@ -179,6 +189,14 @@ int main()
 
         default:
             printf("Invalid choice. Please try again.\n");
+            printf("Enter 'm' to display menu again\n");
+            char showMenu;
+            scanf(" %c", &showMenu);
+            if (showMenu == 'm' || showMenu == 'M')
+            {
+                menu();
+            }
+            break;
         }
     }
 

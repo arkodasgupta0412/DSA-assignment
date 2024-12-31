@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "maxHeap.c"
 #include "minHeap.c"
-#include "utils.c"
+#include "../utils.c"
 
 void bubbleSort(int arr[], int size, long long *cmp)
 {

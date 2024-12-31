@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "utils.h"
+#include "../utils.h"
 
 /* this file creates a max Heap from an unordered array,
 further can be used for implementing Heap (descending order)*/

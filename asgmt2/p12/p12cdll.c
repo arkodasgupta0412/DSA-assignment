@@ -1,8 +1,8 @@
-#include "p8cdll.c"
+#include "cdll.c"
 #include <stdio.h>
 #include <stdbool.h>
-#include "p6.c"
-#include "utils.c"
+#include "../p6.c"
+#include "../utils.c"
 #include <limits.h>
 
 // Function prototypes for additional operations
@@ -21,40 +21,47 @@ void remove_duplicates(Node **head);
 void swap_pairwise(Node **head);
 void move_last_to_front(Node **head);
 void delete_alternate_nodes(Node **head);
-void rotate_list(Node **head);
+void rotate_list(Node **head, int n);
 void reverse_list(Node **head);
 void sort_list(Node **head, int op);
 Node *build_reverse_list(Node *head);
 
+void menu()
+{
+    printf("\nMenu:\n");
+    printf("1. Create Linked List\n");
+    printf("2. Print List\n");
+    printf("3. Print List in Reverse\n");
+    printf("4. Find Size of List\n");
+    printf("5. Check if Two Lists are Equal\n");
+    printf("6. Search and delete the key\n");
+    printf("7. Append List\n");
+    printf("8. Delete Nth Node\n");
+    printf("9. Check if List is Ordered\n");
+    printf("10. Merge Two Sorted Lists\n");
+    printf("11. Insert Target Node\n");
+    printf("12. Remove Duplicates\n");
+    printf("13. Swap Elements Pairwise\n");
+    printf("14. Move Last Element to Front\n");
+    printf("15. Delete Alternate Nodes\n");
+    printf("16. Rotate List\n");
+    printf("17. Reverse List\n");
+    printf("18. Sort List\n");
+    printf("19. Exit\n");
+}
+
 // Main function
 int main()
 {
-    int choice, data, key, position, size, op;
+    int choice, data, key, position, size, op, n;
     Node *list1, *list2, *appendList, *mergedList;
+
+    menu();
 
     while (1)
     {
-        printf("\nMenu:\n");
-        printf("1. Create Linked List\n");
-        printf("2. Print List\n");
-        printf("3. Print List in Reverse\n");
-        printf("4. Find Size of List\n");
-        printf("5. Check if Two Lists are Equal\n");
-        printf("6. Search for a Key\n");
-        printf("7. Append List\n");
-        printf("8. Delete Nth Node\n");
-        printf("9. Check if List is Ordered\n");
-        printf("10. Merge Two Sorted Lists\n");
-        printf("11. Insert Target Node\n");
-        printf("12. Remove Duplicates\n");
-        printf("13. Swap Elements Pairwise\n");
-        printf("14. Move Last Element to Front\n");
-        printf("15. Delete Alternate Nodes\n");
-        printf("16. Rotate List\n");
-        printf("17. Reverse List\n");
-        printf("18. Sort List\n");
-        printf("19. Exit\n");
-        printf("Enter your choice: ");
+
+        printf("\nEnter your choice: ");
         scanf("%d", &choice);
 
         switch (choice)
@@ -73,7 +80,6 @@ int main()
         case 3:
             printf("List in Reverse: ");
             print_reverse(list1);
-            printf("NULL\n");
             break;
 
         case 4:
@@ -156,7 +162,9 @@ int main()
             break;
 
         case 16:
-            rotate_list(&list1);
+            printf("Enter shift: ");
+            scanf("%d", &n);
+            rotate_list(&list1, n);
             break;
 
         case 17:
@@ -178,11 +186,37 @@ int main()
 
         default:
             printf("Invalid choice. Please try again.\n");
+            printf("Enter 'm' to display menu again\n");
+            char showMenu;
+            scanf(" %c", &showMenu);
+            if (showMenu == 'm' || showMenu == 'M')
+            {
+                menu();
+            }
             break;
         }
     }
 
     return 0;
+}
+
+Node *createCDLL(int size)
+{
+    Node *head = init_l();
+    insert_front(createNode(0), &head);
+    Node *cur = head;
+    int data;
+
+    for (int i = 0; i < size; i++)
+    {
+        printf("Enter node %d: ", i + 1);
+        scanf("%d", &data);
+        insert_after(createNode(data), &cur);
+        cur = cur->next;
+    }
+
+    delete_front(&head);
+    return head;
 }
 
 void print(Node *head)
@@ -253,15 +287,34 @@ int search_key(Node **head, int key)
 {
     if (empty_l(*head))
         return -1;
+
     Node *current = *head;
     int index = 0;
     do
     {
         if (current->data == key)
+        {
+            if (current == *head)
+            {
+                delete_front(head);
+            }
+            else
+            {
+                Node *prevNode = current->prev;
+                Node *nextNode = current->next;
+
+                prevNode->next = nextNode;
+                nextNode->prev = prevNode;
+
+                free(current);
+            }
             return index;
+        }
+
         current = current->next;
         index++;
     } while (current != *head);
+
     return -1;
 }
 
@@ -296,7 +349,7 @@ void delete_nth_node(Node **head, int n)
         return;
     }
 
-    int i = 0;
+    int i = 1;
     do
     {
         if (i == n)
@@ -389,10 +442,18 @@ void remove_duplicates(Node **head)
         {
             if (cur1->data == cur2->data)
             {
-                Node *toDelete = cur2;
-                cur1->next = cur2->next;
-                cur2->next->prev = cur1;
-                free(toDelete);
+
+                if (cur2 == *head)
+                {
+                    delete_front(head);
+                }
+                else
+                {
+                    Node *toDelete = cur2;
+                    cur1->next = cur2->next;
+                    cur2->next->prev = cur1;
+                    free(toDelete);
+                }
                 cur2 = cur1->next;
             }
             else
@@ -406,120 +467,125 @@ void remove_duplicates(Node **head)
 
 void swap_pairwise(Node **head)
 {
-    if (empty_l(*head))
+    if (*head == NULL || (*head)->next == *head)
         return;
 
-    Node *current = *head;
-    while (current != *head || current->next != *head)
+    Node *temp = *head;
+    do
     {
-        Node *nextNode = current->next;
-        if (nextNode != *head)
-        {
-            current->next = nextNode->next;
-            nextNode->next->prev = current;
+        swap(&temp->data, &temp->next->data);
+        temp = temp->next->next;
 
-            nextNode->prev = current->prev;
-            if (current == *head)
-                *head = nextNode; // Update head if needed
-            current->prev = nextNode;
-            nextNode->next = current;
-        }
-        current = current->next->next;
-    }
+    } while (temp != *head && temp->next != *head);
 }
 
 void move_last_to_front(Node **head)
 {
-    if (empty_l(*head) || (*head)->next == *head)
-        return; // Only one node
-    Node *last = (*head)->prev;
-    Node *newHead = last;
-    (*head)->prev = last;
-    last->next = *head;
-    newHead->prev = NULL;
-    (*head) = newHead;
+    if (*head == NULL || (*head)->next == *head)
+        return;
+
+    Node *cur = *head;
+    Node *prev = NULL;
+
+    while (cur->next != *head)
+    {
+        prev = cur;
+        cur = cur->next;
+    }
+
+    insert_front(createNode(cur->data), head);
+
+    prev->next = *head;
+    (*head)->prev = prev;
+
+    free(cur);
 }
 
 void delete_alternate_nodes(Node **head)
 {
-    if (empty_l(*head))
+    if (*head == NULL || (*head)->next == *head)
         return;
 
-    Node *current = *head;
-    while (current != *head && current->next != *head)
+    Node *cur = *head;
+    do
     {
-        Node *toDelete = current->next;
-        current->next = toDelete->next;
-        toDelete->next->prev = current;
-        free(toDelete);
-        current = current->next;
-    }
+        delete_after(&cur);
+        cur = cur->next;
+
+    } while (cur != *head || cur->next != *head);
 }
 
-void rotate_list(Node **head)
+void rotate_list(Node **head, int n)
 {
-    if (empty_l(*head) || (*head)->next == *head)
-        return;
-
-    Node *last = (*head)->prev;
-    *head = (*head)->next;
-    last->next = *head;
-    (*head)->prev = last;
+    for (int i = 0; i < n; i++)
+    {
+        move_last_to_front(head);
+    }
 }
 
 void reverse_list(Node **head)
 {
-    if (empty_l(*head) || (*head)->next == *head)
+    if (*head == NULL)
         return;
 
+    Node *prev = NULL;
     Node *current = *head;
-    Node *prevNode = NULL;
-    Node *nextNode;
-
+    Node *next;
     do
     {
-        nextNode = current->next;
-        current->next = prevNode;
-        current->prev = nextNode;
-        prevNode = current;
-        current = nextNode;
-    } while (current != *head);
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    } while (current != (*head));
 
-    *head = prevNode;
+    (*head)->next = prev;
+    *head = prev;
 }
 
 void sort_list(Node **head, int op)
 {
-    if (empty_l(*head))
-        return;
+    Node *current = *head, *index = NULL;
+    int temp;
 
-    bool swapped;
-    do
+    if (*head == NULL)
     {
-        swapped = false;
-        Node *current = *head;
+        printf("List is empty");
+        return;
+    }
+    else
+    {
         do
         {
-            Node *nextNode = current->next;
-            if ((op == 1 && current->data > nextNode->data) ||
-                (op == 0 && current->data < nextNode->data))
+            index = current->next;
+            while (index != *head)
             {
-
-                // Swap data
-                int temp = current->data;
-                current->data = nextNode->data;
-                nextNode->data = temp;
-
-                swapped = true;
+                if (op == 0)
+                {
+                    if (current->data > index->data)
+                    {
+                        swap(&current->data, &index->data);
+                    }
+                    index = index->next;
+                }
+                else
+                {
+                    if (current->data < index->data)
+                    {
+                        swap(&current->data, &index->data);
+                    }
+                    index = index->next;
+                }
             }
-            current = nextNode;
-        } while (current != *head && current->next != *head);
-    } while (swapped);
+            current = current->next;
+        } while (current->next != *head);
+    }
 }
 
 Node *build_reverse_list(Node *head)
 {
     Node *reversedList = NULL;
+    insert_front(createNode(0), &reversedList);
 
     if (head == NULL)
     {
@@ -530,7 +596,7 @@ Node *build_reverse_list(Node *head)
     do
     {
         Node *newNode = createNode(cur->data);
-        insert_end(&reversedList, newNode);
+        insert_front(newNode, &reversedList);
         cur = cur->next;
     } while (cur != head);
 

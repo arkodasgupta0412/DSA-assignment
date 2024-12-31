@@ -1,8 +1,8 @@
-#include "p8dll.c"
+#include "dll.c"
 #include <stdio.h>
 #include <stdbool.h>
-#include "p6.c"
-#include "utils.c"
+#include "../p6.c"
+#include "../utils.c"
 #include <limits.h>
 
 // Function prototypes for additional DLL operations
@@ -26,34 +26,40 @@ void reverse_list(Node **head);
 void sort_list(Node **head, int op);
 Node *build_reverse_list(Node *head);
 
+void menu()
+{
+    printf("\nMenu:\n");
+    printf("1. Create Doubly Linked List\n");
+    printf("2. Print List\n");
+    printf("3. Print List in Reverse\n");
+    printf("4. Find Size of List\n");
+    printf("5. Check if Two Lists are Equal\n");
+    printf("6. Search and delete the Key\n");
+    printf("7. Append List\n");
+    printf("8. Delete Nth Node\n");
+    printf("9. Check if List is Ordered\n");
+    printf("10. Merge Two Sorted Lists\n");
+    printf("11. Insert Target Node\n");
+    printf("12. Remove Duplicates\n");
+    printf("13. Swap Elements Pairwise\n");
+    printf("14. Move Last Element to Front\n");
+    printf("15. Delete Alternate Nodes\n");
+    printf("16. Rotate List\n");
+    printf("17. Reverse List\n");
+    printf("18. Sort List\n");
+    printf("19. Exit\n");
+}
+
 int main()
 {
     int choice, data, key, position, size, op;
     Node *list1, *list2, *appendList, *mergedList;
 
+    menu();
+
     while (1)
     {
-        printf("\nMenu:\n");
-        printf("1. Create Doubly Linked List\n");
-        printf("2. Print List\n");
-        printf("3. Print List in Reverse\n");
-        printf("4. Find Size of List\n");
-        printf("5. Check if Two Lists are Equal\n");
-        printf("6. Search for a Key\n");
-        printf("7. Append List\n");
-        printf("8. Delete Nth Node\n");
-        printf("9. Check if List is Ordered\n");
-        printf("10. Merge Two Sorted Lists\n");
-        printf("11. Insert Target Node\n");
-        printf("12. Remove Duplicates\n");
-        printf("13. Swap Elements Pairwise\n");
-        printf("14. Move Last Element to Front\n");
-        printf("15. Delete Alternate Nodes\n");
-        printf("16. Rotate List\n");
-        printf("17. Reverse List\n");
-        printf("18. Sort List\n");
-        printf("19. Exit\n");
-        printf("Enter your choice: ");
+        printf("\nEnter your choice: ");
         scanf("%d", &choice);
 
         switch (choice)
@@ -72,7 +78,6 @@ int main()
         case 3:
             printf("List in Reverse: ");
             print_reverse(list1);
-            printf("NULL\n");
             break;
 
         case 4:
@@ -177,6 +182,13 @@ int main()
 
         default:
             printf("Invalid choice. Please try again.\n");
+            printf("Enter 'm' to display menu again\n");
+            char showMenu;
+            scanf(" %c", &showMenu);
+            if (showMenu == 'm' || showMenu == 'M')
+            {
+                menu();
+            }
             break;
         }
     }
@@ -186,21 +198,26 @@ int main()
 
 Node *createDLL(int size)
 {
-    Node *head = init_dll();
+    Node *head = init_l();
+    insert_front(createNode(0), &head);
+    Node *cur = head;
     int data;
 
     for (int i = 0; i < size; i++)
     {
         printf("Enter node %d: ", i + 1);
         scanf("%d", &data);
-        insert_after(createNode(data), &head);
+        insert_after(createNode(data), &cur);
+        cur = cur->next;
     }
 
+    delete_front(&head);
     return head;
 }
 
 void print(Node *head)
 {
+    printf("NULL <-> ");
     Node *temp = head;
     while (temp != NULL)
     {
@@ -218,20 +235,19 @@ void print_reverse(Node *head)
         return;
     }
 
-    // Traverse to the tail (the last node)
     Node *current = head;
     while (current->next != NULL)
     {
         current = current->next;
     }
 
-    // Traverse backwards
+    printf("NULL <-> ");
     while (current != NULL)
     {
-        printf("%d ", current->data);
+        printf("%d <-> ", current->data);
         current = current->prev;
     }
-    printf("\n");
+    printf("NULL\n");
 }
 
 int size_of_list(Node *head)
@@ -538,11 +554,9 @@ void rotate_list(Node **head)
         cur = cur->next;
     }
 
-    cur->next = (*head)->prev;
-    (*head)->prev->next = cur;
-    (*head)->prev->prev = cur;
-    cur = cur->next;
-    cur->prev = NULL;
+    cur->next = *head;
+    (*head)->prev = cur;
+    cur->prev->next = NULL;
 }
 
 // Function to reverse a DLL
@@ -601,7 +615,7 @@ Node *build_reverse_list(Node *head)
     while (cur != NULL)
     {
         Node *newNode = createNode(cur->data);
-        insert_front(&reversedList, newNode);
+        insert_front(reversedList, &newNode);
         cur = cur->next;
     }
 

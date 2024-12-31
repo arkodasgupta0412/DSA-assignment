@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "p8sll.c"
+#include "../p8.c"
 #define LEN 200
 
 Node *createNumList(char num[])
@@ -201,30 +201,30 @@ Node *multiply(Node *n1, Node *n2)
 int main()
 {
     char num1[LEN], num2[LEN];
-    printf("Enter large number 1: ");
+    printf("\nEnter large number 1: ");
     scanf("%s", num1);
-    printf("Enter large number 2: ");
+    printf("\nEnter large number 2: ");
     scanf("%s", num2);
 
     Node *n1 = createNumList(num1);
     Node *n2 = createNumList(num2);
 
-    printf("X = ");
+    printf("\nX = ");
     toString(n1);
-    printf("Y = ");
+    printf("\nY = ");
     toString(n2);
 
     Node *sum = add(n1, n2);
     Node *diff = subtract(n1, n2);
     Node *prod = multiply(n1, n2);
 
-    printf("Sum: X + Y = ");
+    printf("\nSum: X + Y = ");
     toString(sum);
 
-    printf("Difference: X - Y = ");
+    printf("\nDifference: X - Y = ");
     toString(diff);
 
-    printf("Product: X * Y = ");
+    printf("\nProduct: X * Y = ");
     toString(prod);
 
     return 0;

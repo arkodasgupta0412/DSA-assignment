@@ -111,9 +111,9 @@ void print(int arr[], int len)
 int main()
 {
     char num1[LEN], num2[LEN];
-    printf("Enter large number 1: ");
+    printf("\nEnter large number 1: ");
     scanf("%s", num1);
-    printf("Enter large number 2: ");
+    printf("\nEnter large number 2: ");
     scanf("%s", num2);
 
     int len1 = strlen(num1), len2 = strlen(num2);
@@ -125,7 +125,7 @@ int main()
     int sum[MAX(len1, len2) + 1];
     memset(sum, 0, sizeof(sum));
     add(digit1, digit2, len1, len2, sum);
-    printf("Sum: ");
+    printf("\nSum: ");
     print(sum, MAX(len1, len2) + 1);
 
     // Subtraction
@@ -134,7 +134,7 @@ int main()
         int diff[len1];
         memset(diff, 0, sizeof(diff));
         sub(digit1, digit2, len1, len2, diff);
-        printf("Difference: ");
+        printf("\nDifference: ");
         print(diff, len1);
     }
     else
@@ -142,7 +142,7 @@ int main()
         int diff[len2];
         memset(diff, 0, sizeof(diff));
         sub(digit2, digit1, len2, len1, diff);
-        printf("Difference: -");
+        printf("\nDifference: -");
         print(diff, len2);
     }
 
@@ -150,7 +150,7 @@ int main()
     int product[len1 + len2];
     memset(product, 0, sizeof(product));
     multiply(digit1, digit2, len1, len2, product);
-    printf("Product: ");
+    printf("\nProduct: ");
     print(product, len1 + len2);
 
     return 0;

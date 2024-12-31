@@ -1,5 +1,5 @@
-#ifndef P8DLL_H
-#define P8DLL_H
+#ifndef DLL_H
+#define DLL_H
 
 #include <stdio.h>
 #include <stdlib.h>
