@@ -62,53 +62,53 @@ int main()
 
     // Insertion Sort
 
-    /*t_start = clock();
+    t_start = clock();
     long long cmpis = 0;
     insertion_sort(arr, size, &cmpis);
     t_end = clock();
     time_insertion = ((double)(t_end - t_start)) / CLOCKS_PER_SEC;
     printf("Insertion Sort Comparisons: %lld\n", cmpis);
-    printf("Insertion Sort Time: %.6f seconds\n\n", time_insertion);*/
+    printf("Insertion Sort Time: %.6f seconds\n\n", time_insertion);
 
     // Selection Sort
 
-    /*t_start = clock();
+    t_start = clock();
     long long cmpss = 0;
     selection_sort(arr, size, &cmpss);
     t_end = clock();
     time_selection = ((double)(t_end - t_start)) / CLOCKS_PER_SEC;
     printf("Selection Sort Comparisons: %lld\n", cmpss);
-    printf("Selection Sort Time: %.6f seconds\n\n", time_selection);*/
+    printf("Selection Sort Time: %.6f seconds\n\n", time_selection);
 
     // Merge Sort
 
-    /*long long cmpms = 0;
+    long long cmpms = 0;
     t_start = clock();
     merge_sort(arr, size, &cmpms);
     t_end = clock();
     time_merge = ((long double)(t_end - t_start)) / CLOCKS_PER_SEC;
     printf("Merge Sort Comparisons: %lld\n", cmpms);
-    printf("Merge Sort Time: %.6f seconds\n\n", time_merge);*/
+    printf("Merge Sort Time: %.6f seconds\n\n", time_merge);
 
     // Heap Sort
 
-    /*long long cmphs = 0;
+    long long cmphs = 0;
     t_start = clock();
     heap_sort(arr, size, &cmphs);
     t_end = clock();
     time_heap = ((double)(t_end - t_start)) / CLOCKS_PER_SEC;
     printf("Heap Sort Comparisons: %lld\n", cmphs);
-    printf("Heap Sort Time: %.6f seconds\n\n", time_heap);*/
+    printf("Heap Sort Time: %.6f seconds\n\n", time_heap);
 
     // Quick Sort
 
-    /*long long cmpqs = 0;
+    long long cmpqs = 0;
     t_start = clock();
     quick_sort(arr, size, &cmpqs);
     t_end = clock();
     time_quick = ((double)(t_end - t_start)) / CLOCKS_PER_SEC;
     printf("Quick Sort Comparisons: %lld\n", cmpqs);
-    printf("Quick Sort Time: %.6f seconds\n\n", time_quick);*/
+    printf("Quick Sort Time: %.6f seconds\n\n", time_quick);
 
     free(arr);
     return 0;
