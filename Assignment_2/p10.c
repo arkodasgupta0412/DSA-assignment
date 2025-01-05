@@ -1,8 +1,8 @@
-#include "../p8.c"
+#include "p8.c"
 #include <stdio.h>
 #include <stdbool.h>
-#include "../p6.c"
-#include "../utils.c"
+#include "p6.c"
+#include "utils.c"
 #include <limits.h>
 
 // Function prototypes for additional operations
@@ -21,7 +21,7 @@ void remove_duplicates(Node **head);
 void swap_pairwise(Node **head);
 void move_last_to_front(Node **head);
 void delete_alternate_nodes(Node **head);
-void rotate_list(Node **head);
+void rotate_list(Node **head, int n);
 void reverse_list(Node **head);
 void sort_list(Node **head, int op);
 Node *build_reverse_list(Node *head);
@@ -53,7 +53,7 @@ void menu()
 
 int main()
 {
-    int choice, data, key, position, size, op;
+    int choice, data, key, position, size, op, n;
     Node *list1, *list2, *appendList, *mergedList, *reversed;
 
     menu();
@@ -162,7 +162,9 @@ int main()
             break;
 
         case 16:
-            rotate_list(&list1);
+            printf("Enter shift: ");
+            scanf("%d", &n);
+            rotate_list(&list1, n);
             break;
 
         case 17:
@@ -499,19 +501,13 @@ void delete_alternate_nodes(Node **head)
     }
 }
 
-void rotate_list(Node **head)
+/* rotate list, shifts by n nodes */
+void rotate_list(Node **head, int n)
 {
-    if (*head == NULL || (*head)->next == NULL)
-        return;
-    Node *current = *head;
-    while (current->next->next != NULL)
+    for (int i = 0; i < n; i++)
     {
-        current = current->next;
+        move_last_to_front(head);
     }
-    Node *last = current->next;
-    current->next = NULL;
-    last->next = *head;
-    *head = last;
 }
 
 /* reverses the list in place */
