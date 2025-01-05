@@ -2,7 +2,7 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 
-csv_file_path = r"C:\Users\ABHIRUP\Desktop\code_playground\DSA_Assignments\Sem2_DSA\DSA-assignment\Assignment_1\data.csv"
+csv_file_path = r"C:\Users\ABHIRUP\Desktop\code_playground\DSA_Assignments\Sem2_DSA\DSA-assignment\Assignment_1\fibonacci_data.csv"
 
 n_values = []
 times = []
@@ -26,8 +26,8 @@ plt.figure(figsize=(10, 6))
 plt.plot(n_values, times, marker='o', linestyle='-', color='b', label='Time vs n')
 
 plt.xlabel('n (input size)')
-plt.ylabel('Time (milliseconds)')
-plt.title('Performance Graph')
+plt.ylabel('Fibonacci value')
+plt.title('Fibonacci Graph')
 plt.grid(True)
 plt.legend()
 
