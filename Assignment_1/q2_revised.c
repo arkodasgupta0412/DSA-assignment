@@ -8,6 +8,7 @@ the Fibonacci number vs n graph.
 #include <stdlib.h>
 #include <limits.h>
 #include <stdbool.h>
+#include <time.h>
 
 
 void fibIterative(int n) {
@@ -70,5 +71,7 @@ void main() {
     printf("Enter n: ");
     scanf("%d", &n);
 
-    fibIterative(n);
+    for (int i = 5; i <= 50; i += 5) {
+        fibIterative(i);
+    }
 }

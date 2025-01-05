@@ -1,3 +1,9 @@
+/*
+3. Write programs for linear search and binary search for searching integers, floating point numbers
+and words in arrays of respective types.
+*/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
