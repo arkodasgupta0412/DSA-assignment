@@ -4,6 +4,11 @@ is overflow in the result and change the data types for accommodating higher val
 the Fibonacci number vs n graph.
 */
 
+/*
+Here a logarithmic approach is taken for fibonacci sequence using 
+matrix exponentiation.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>

@@ -4,6 +4,10 @@ is overflow in the result and change the data types for accommodating higher val
 the Fibonacci number vs n graph.
 */
 
+/*
+Here a recursive O(2^n) without dynamic programming and an iterative O(n) approach is taken for fibonacci sequence.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
